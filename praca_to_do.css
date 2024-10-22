@@ -47,12 +47,12 @@ main {
     text-decoration: none;
     display: block;
     padding: 5px;
-    background-color: #f0f0f0;
+    background-color: #e8c5ab;
     border-radius: 5px;
 }
 
 .sidebar ul li a:hover {
-    background-color: #ddd;
+    background-color: #d2ad8c;
     text-decoration: underline;
 }
 
@@ -64,7 +64,6 @@ section.content {
 
 table {
     width: 100%;
-    /* border-collapse: collapse;*/
     margin: 20px 0;
     border: 1px solid #ddd;
 }
