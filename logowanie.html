@@ -3,73 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikacja To-Do - Rejestracja</title>
-    <link rel="stylesheet" href="praca_to_do.css">
+    <title>Aplikacja Prostego Kalkulatora</title>
+    <link rel="stylesheet" href="style.css">
     <script>
         function validateForm() {
-            const now = new Date();
-            console.log(
-                now.getFullYear().toString() + "-" +
-                (now.getMonth() + 1).toString().padStart(2, '0') + "-" +
-                now.getDate().toString().padStart(2, '0') + " " +
-                now.getHours().toString().padStart(2, '0') + ":" +
-                now.getMinutes().toString().padStart(2, '0') + ":" +
-                now.getSeconds().toString().padStart(2, '0')
-            );
+            const xField = document.forms["kalkulator"]["x"];
+            const yField = document.forms["kalkulator"]["y"];
+            const x = xField.value;
+            const y = yField.value;
+            let valid = true;
 
+            document.getElementById("xError").textContent = "";
+            document.getElementById("yError").textContent = "";
 
-            const emailField = document.forms["registrationForm"]["email"];
-            const passwordField = document.forms["registrationForm"]["haslo"];
-            const email = emailField.value;
-            const password = passwordField.value;
-            const errorMessages = [];
-
-            document.getElementById("emailError").textContent = "";
-            document.getElementById("passwordError").textContent = "";
-            document.getElementById("summaryError").textContent = "";
-
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-            if(email.length===0){
-                document.getElementById("emailError").textContent = "Pole Email nie może być puste";
-                errorMessages.push("Pole Email nie może być puste");
-                console.log("Pole Email nie może być puste")
+            if (isNaN(x) || x === "") {
+                document.getElementById("xError").textContent = "Wprowadź prawidłową liczbę dla X.";
+                valid = false;
             }
-
-            else if (email.replace(/\s/g, "") === "") {
-                document.getElementById("emailError").textContent = "Email nie może składać się wyłącznie ze spacji.";
-                errorMessages.push("Email nie może zawierać wyłącznie spacji.");
-                console.log("Email nie może zawierać wyłącznie spacji.")
+            if (isNaN(y) || y === "") {
+                document.getElementById("yError").textContent = "Wprowadź prawidłową liczbę dla Y.";
+                valid = false;
             }
-            else if (!emailRegex.test(email)) {
-                document.getElementById("emailError").textContent = "Wprowadź poprawny adres e-mail.";
-                errorMessages.push("Niepoprawny adres e-mail.");
-                console.log("Niepoprawny adres e-mail.")
-            }
-
-            if (password.length===0){
-                document.getElementById("passwordError").textContent = "Pole haslo nie może być puste";
-                errorMessages.push("Pole haslo nie może być puste");
-                console.log("Pole haslo nie może być puste")
-            }
-
-            else if (password.replace(/\s/g, "") === "") {
-                document.getElementById("passwordError").textContent = "Hasło nie może składać się wyłącznie ze spacji.";
-                errorMessages.push("Hasło nie może zawierać wyłącznie spacji.");
-                console.log("Hasło nie może zawierać wyłącznie spacji.")
-            }
-            else if (password.length < 2 || password.length > 60) {
-                document.getElementById("passwordError").textContent = "Hasło powinno mieć od 2 do 60 znaków.";
-                errorMessages.push("Niepoprawna długość hasła.");
-                console.log("Niepoprawna długość hasła.")
-            }
-
-            if (errorMessages.length > 0) {
-                document.getElementById("summaryError").innerHTML = "Wystąpiły błędy:<br>" + errorMessages.join("<br>");
-                return false;
-            }
-            console.log("Rejestracja udana!")
-            return true;
+            return valid;
         }
     </script>
 </head>
@@ -77,25 +32,27 @@
 
 <header>
     <div class="header">
-        <h1>Aplikacja To-Do</h1>
-        <p>Prosta aplikacja WWW do zarządzania listami zadań (To-Do)</p>
+        <h1>Aplikacja Prostego Kalkulatora</h1>
+        <p>Prosta aplikacja do obliczania wartości</p>
     </div>
 </header>
 
 <main>
     <section class="content">
-        <h2 id="o_aplikacji">Rejestracja konta</h2>
-        <p>Uwaga! Hasło powinno mieć od 2 do 60 znaków.</p>
+        <h2 id="o_aplikacji">Kalkulator</h2>
+        <p>W dwa pierwsze pola wpisz liczby, a później kliknij odpowiedni przycisk.</p>
 
-        <form name="registrationForm" onsubmit="return validateForm()">
+        <form name="kalkulator" action="http://localhost:3000" method="GET" onsubmit="return validateForm()">
             <div>
-                <p>E-mail: <input type="text" name="email" /></p>
-                <span id="emailError" style="color:red;"></span>
-                <p>Hasło: <input type="password" name="haslo" /></p>
-                <span id="passwordError" style="color:red;"></span>
+                <p>Pierwsza liczba: <input type="text" name="x" /></p>
+                <span id="xError" style="color:red;"></span>
+                <p>Druga liczba: <input type="text" name="y" /></p>
+                <span id="yError" style="color:red;"></span>
             </div>
-            <input type="submit" value="Submit">
-            <p id="summaryError" style="color:red;"></p>
+            <button type="submit" formaction="http://localhost:3000/dodaj">Dodaj</button>
+            <button type="submit" formaction="http://localhost:3000/odejmij">Odejmij</button>
+            <button type="submit" formaction="http://localhost:3000/pomnoz">Pomnóż</button>
+            <button type="submit" formaction="http://localhost:3000/podziel">Podziel</button>
         </form>
     </section>
 </main>
